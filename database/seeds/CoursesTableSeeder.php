@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class CoursesTableSeeder extends Seeder
 {
@@ -11,6 +12,16 @@ class CoursesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $faker = Faker::create();
+        for($i=0; $i<=10; $i++){
+            DB::table('courses')->insert([
+            'courseName' => $faker->name,
+            'duraction' => $faker->randomElement($array = array ('1','2','3')),
+            'year' => $faker->year($max = 'now'),
+            'course_type' => $faker->jobTitle,
+            'monthly_payment' => $faker->monthName($max = 'now'),
+            'obs' => $faker->text
+        ]);
+        }    
     }
 }
