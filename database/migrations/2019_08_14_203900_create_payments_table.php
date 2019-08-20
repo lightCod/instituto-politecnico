@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->date('payment_date');
             $table->string('refering_mounth');
-            $table->string('obs');
+            $table->mediumText('obs');
             $table->timestamps();
 
             $table->unsignedInteger('student_id');

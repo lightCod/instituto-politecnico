@@ -19,8 +19,8 @@ class CreateCoursesTable extends Migration
             $table->string('duraction');
             $table->integer('year');
             $table->string('course_type');
-            $table->decimal('monthly_payment', 10, 2);
-            $table->decimal('obs');
+            $table->string('monthly_payment', 10, 2);
+            $table->mediumText('obs');
             $table->timestamps();
         });
     }

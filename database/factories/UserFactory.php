@@ -2,6 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\User;
+use App\Course;
+use App\PaymentType;
+use App\Student;
+use App\payment;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -25,3 +29,4 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+

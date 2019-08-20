@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('contacto');
             $table->boolean('scholarship');
             $table->enum('scholarship_type', ['12.5%', '15%', '25%', '100%']);
-            $table->string('obs');
+            $table->mediumText('obs');
             $table->timestamps();
 
             $table->unsignedInteger('courses_id');
