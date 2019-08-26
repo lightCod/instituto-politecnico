@@ -14,7 +14,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate(10);
+        return view('courses.listcourses')->with(['courses' => $courses, 'msg' => '']);
     }
 
     /**
@@ -24,7 +25,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.storecourse')->with('msg', 'create');
     }
 
     /**
@@ -35,7 +36,23 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $course = new Course();
+            $course->courseName = $request['coursename'];
+            $course->duraction = $request['duration'];
+            $course->year = $request['year'];
+            $course->course_type = $request['course_name'];
+            $course->monthly_payment = $request['monthly'];
+            $course->obs = $request['obs'];
+
+            $course->save();
+
+            return view('courses.storecourse')->with('msg', 'success');
+        }
+        catch(Exception $e){
+            return view('courses.storecourse')->with('msg', 'error');
+        }
+        
     }
 
     /**
@@ -55,9 +72,11 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
-        //
+        $course = Course::find($id);
+
+        return view('courses.editcourse')->with(['course' => $course, 'msg' => '']);
     }
 
     /**
@@ -67,9 +86,25 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $course = Course::find($id);
+
+            $course->courseName = $request['coursename'];
+            $course->duraction = $request['duration'];
+            $course->year = $request['year'];
+            $course->course_type = $request['course_name'];
+            $course->monthly_payment = $request['monthly'];
+            $course->obs = $request['obs'];
+
+            $course->save();
+
+            return view('courses.editcourse')->with(['course' => $course, 'msg' => 'success']);
+        }
+        catch(Exception $e){
+            return view('courses.editcourse')->with('msg', 'error');
+        }
     }
 
     /**
@@ -78,8 +113,17 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
-    {
-        //
+    public function destroy($id)
+    { 
+        try{
+            $course = Course::find($id);
+            $course->delete();
+            $courses = Course::paginate(10);
+            return view('courses.listcourses')->with(['courses' => $courses, 'msg' => 'sucess']);
+        }     
+        catch(Exception $e){
+            $courses = Course::paginate(10);
+            return view('courses.listcourses')->with(['courses' => $courses, 'msg' => 'error']);
+        }  
     }
 }
