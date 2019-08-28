@@ -15,12 +15,12 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('level');
-            $table->string('contacto');
+            $table->string('contacto')->nullable();
             $table->boolean('scholarship');
             $table->enum('scholarship_type', ['12.5%', '15%', '25%', '100%']);
-            $table->mediumText('obs');
+            $table->mediumText('obs')->nullable();
             $table->timestamps();
 
             $table->unsignedInteger('courses_id');

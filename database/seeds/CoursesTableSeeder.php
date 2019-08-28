@@ -19,7 +19,7 @@ class CoursesTableSeeder extends Seeder
             'duraction' => $faker->randomElement($array = array ('1','2','3')),
             'year' => $faker->year($max = 'now'),
             'course_type' => $faker->jobTitle,
-            'monthly_payment' => $faker->monthName($max = 'now'),
+            'monthly_payment' => $faker->randomNumber(2),
             'obs' => $faker->text
         ]);
         }    
