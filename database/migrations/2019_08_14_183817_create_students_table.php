@@ -19,7 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('level');
             $table->string('contacto')->nullable();
             $table->boolean('scholarship');
-            $table->enum('scholarship_type', ['12.5%', '15%', '25%', '100%']);
+            $table->enum('scholarship_type', ['12.5%', '15%', '25%', '100%'])->nullable();
             $table->mediumText('obs')->nullable();
             $table->timestamps();
 

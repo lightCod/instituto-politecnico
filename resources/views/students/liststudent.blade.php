@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-header">
         <h1 class="page-title">
-            Lista De Cursos
+            Curso de {{$course->courseName}} de {{$course->year}}
         </h1>
         @if ($msg == 'success')
             <div class="alert alert-success" role="alert">
@@ -21,38 +21,38 @@
               <thead>
                 <tr>
                   <th colspan="8">
-                      <a href="{{ route('createcourse') }}" class="btn btn-secondary">Novo Curso</a>
+                  <a href="{{ route('createstudent') }}" class="btn btn-secondary">Novo Estudante</a>
                   </th>
                 </tr>
                 <tr>
-                  <th>Curso</th>
-                  <th>Duracao</th>
-                  <th>Ano</th>
-                  <th>Tipo do Curso</th>
-                  <th>Pagamento Mensal</th>
+                  <th>Nome</th>
+                  <th>Nivel</th>
+                  <th>Contacto</th>
+                  <th>Bolsista</th>
+                  <th>Tipo de bolsa</th>
                   <th></th>
                   <th></th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                  @foreach ($courses as $course)
+                  @foreach ($students as $student)
                     <tr>
-                        <td>{{$course->courseName}}</td>
-                        <td>{{$course->duraction}}</td>
-                        <td>{{$course->year}}</td>
-                        <td>{{$course->course_type}}</td>
-                        <td>{{$course->monthly_payment}}</td>
+                        <td>{{$student->name}}</td>
+                        <td>{{$student->level}}</td>
+                        <td>{{$student->contacto}}</td>
+                        <td>{{$student->scholarship}}</td>
+                        <td>{{$student->scholarship_type}}</td>
                         <td class="text-right">
-                          <a href="{{ route('students', $course->id) }}" class="btn btn-secondary btn-sm">Gerir</a>
+                          <a href="{{ route('students', $student->id) }}" class="btn btn-secondary btn-sm">Gerir</a>
                         </td>
                         <td>
-                        <a class="icon" href="{{ route('course.edit', $course->id) }}">
+                        <a class="icon" href="{{ route('student.edit', $student->id) }}">
                             <i class="fe fe-edit"></i>
                           </a>
                         </td>
                         <td class="w-1">
-                          <form action="{{ route('course.destroy', $course->id) }}" method="post">
+                          <form action="{{ route('student.destroy', $student->id) }}" method="post">
                               {!! csrf_field() !!}
                               <button class="icon" type="submit"><i class="fe fe-trash"></i></button>
                           </form>
@@ -63,5 +63,5 @@
             </table>
           </div>
     </div>
-    {{ $courses->links() }}
+    {{ $students->links() }}
 @endsection
