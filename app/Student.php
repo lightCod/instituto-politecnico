@@ -15,6 +15,6 @@ class Student extends Model
     }
 
     public function credits() {
-        return $this->hasMany('App\Credit')
+        return $this->hasMany('App\Credit');
     }
 }

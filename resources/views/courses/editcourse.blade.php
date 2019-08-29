@@ -5,7 +5,7 @@
     {!! csrf_field() !!}
 
       <div class="card-header">
-        <h3 class="card-title">Registro de Curso</h3>
+        <h3 class="card-title">Atualisar dados do curso</h3>
       </div>
       <div class="card-body">
             @if ($msg == 'success')
@@ -65,8 +65,8 @@
   </script>
     <div class="card-footer text-right">
       <div class="d-flex">
-        <a href="javascript:void(0)" class="btn btn-link">Cancel</a>
-        <button type="submit" class="btn btn-primary ml-auto">Send data</button>
+        <a href="javascript:void(0)" class="btn btn-link">Cancelar</a>
+        <button type="submit" class="btn btn-primary ml-auto">Atualisar dados</button>
       </div>
     </div>
     </div>
