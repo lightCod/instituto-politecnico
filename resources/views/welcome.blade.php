@@ -39,7 +39,7 @@
         <div class="header py-4">
           <div class="container">
             <div class="d-flex">
-              <a class="header-brand" href="./index.html">
+              <a class="header-brand" href="{{ url('/') }}">
                 Instituto Politecnico
               </a>
               <div class="d-flex order-lg-2 ml-auto">
@@ -122,7 +122,7 @@
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    <a href="{{ url('/') }}" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
                   <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i> Cursos</a>
