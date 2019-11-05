@@ -18,9 +18,8 @@ class CoursesTableSeeder extends Seeder
             'courseName' => $faker->name,
             'duraction' => $faker->randomElement($array = array ('1','2','3')),
             'year' => $faker->year($max = 'now'),
-            'course_type' => $faker->jobTitle,
-            'monthly_payment' => $faker->randomNumber(2),
-            'obs' => $faker->text
+            'course_type' => 'Nao Comercias',
+            'monthly_payment' => $faker->randomNumber(2)
         ]);
         }    
     }

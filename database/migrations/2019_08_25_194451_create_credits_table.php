@@ -15,14 +15,14 @@ class CreateCreditsTable extends Migration
     {
         Schema::create('credits', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('nr');
             $table->decimal('amount', 10, 2);
             $table->date('credit_date');
+            $table->string('regarding');
             $table->timestamps();
 
-            $table->unsignedInteger('debits_id');
             $table->unsignedInteger('students_id');
 
-            $table->foreign('debits_id')->references('id')->on('debits');
             $table->foreign('students_id')->references('id')->on('students');
         });
     }

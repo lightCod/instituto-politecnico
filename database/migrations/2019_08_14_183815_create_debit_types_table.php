@@ -17,6 +17,7 @@ class CreateDebitTypesTable extends Migration
             $table->increments('id');
             $table->string('debit_name');
             $table->decimal('amount', 10, 2);
+            $table->integer('start_charge_fine');
             $table->timestamps();
         });
     }

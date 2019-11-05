@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Fine;
 
 class DebitType extends Model
 {
     
-    public function debit(){
+    public function debits(){
         return $this->hasMany('App\Debit');
     }
+
 }

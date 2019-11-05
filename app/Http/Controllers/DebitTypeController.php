@@ -14,7 +14,8 @@ class DebitTypeController extends Controller
      */
     public function index()
     {
-        //
+        $debittypes = DebitType::orderBy('created_at', 'desc')->get();
+        return view('debittype.listdebittype')->with(['debittypes' => $debittypes, 'msg' => '']);
     }
 
     /**
@@ -24,7 +25,7 @@ class DebitTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('debittype.storedebittype')->with('msg', 'create');
     }
 
     /**
@@ -35,7 +36,19 @@ class DebitTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $debittype = new DebitType();
+            $debittype->debit_name = $request['debitname'];
+            $debittype->amount = str_replace (',', '.', str_replace ('.', '', $request['amount']));
+            $debittype->start_charge_fine = 5;
+
+            $debittype->save();
+
+            return view('debittype.storedebittype')->with('msg', 'success');
+        }
+        catch(\Exception $e){
+            return view('debittype.storedebittype')->with('msg', 'error');
+        }
     }
 
     /**
@@ -55,9 +68,11 @@ class DebitTypeController extends Controller
      * @param  \App\PaymentType  $paymentType
      * @return \Illuminate\Http\Response
      */
-    public function edit(DebitType $debitType)
+    public function edit(Request $request)
     {
-        //
+        $debittype = DebitType::find($request['id']);
+
+        return view('debittype.editdebittype')->with(['debittype' => $debittype, 'msg' => '']);
     }
 
     /**
@@ -67,9 +82,20 @@ class DebitTypeController extends Controller
      * @param  \App\PaymentType  $paymentType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DebitType $debitType)
+    public function update(Request $request)
     {
-        //
+        try{
+            $debittype = DebitType::find($request['id']);
+            $debittype->debit_name = $request['debitname'];
+            $debittype->amount = str_replace (',', '.', str_replace ('.', '', $request['amount']));
+
+            $debittype->save();
+
+            return view('debittype.editdebittype')->with(['debittype' => $debittype, 'msg' => 'success']);
+        }
+        catch(\Exception $e){
+            return view('debittype.editdebittype')->with(['debittype' => $debittype, 'msg' => 'error']);
+        }
     }
 
     /**
@@ -78,8 +104,18 @@ class DebitTypeController extends Controller
      * @param  \App\PaymentType  $paymentType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DebitType $debitType)
+    public function destroy(Request $request)
     {
-        //
+        try{
+            
+            $debittype = DebitType::find($request['id']);
+            $debittype->delete();
+            $debittypes = DebitType::all();
+            return view('debittype.listdebittype')->with(['debittypes' => $debittypes, 'msg' => 'success']);
+        }
+        catch(\Exception $e){
+            return view('debittype.listdebittype')->with(['debittypes' => $debittypes, 'msg' => 'error']);
+        }
     }
+    
 }

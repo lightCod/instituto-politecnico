@@ -16,11 +16,24 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('level');
-            $table->string('contacto')->nullable();
+            $table->string('level', 4);
+            $table->string('contacto', 30)->nullable();
+            $table->enum('gender', ['M', 'F']);
             $table->boolean('scholarship');
-            $table->enum('scholarship_type', ['12.5%', '15%', '25%', '100%'])->nullable();
-            $table->mediumText('obs')->nullable();
+            $table->string('scholarship_type', 7)->default('None');
+            $table->string('last_school', 255);
+            $table->string('how_to_pay', 255);
+            $table->string('funding_source', 255);
+            $table->string('name_of_carer', 255);
+            $table->string('contact_of_carer', 30);
+            $table->string('doc', 50);
+            $table->string('doc_number', 30)->unique();
+            $table->string('provenance', 150);
+            $table->string('address', 255);
+            $table->string('finish_year', 4);
+            $table->date('date_birth');
+            $table->string('need_care', 255);
+            $table->boolean('active')->default(1);
             $table->timestamps();
 
             $table->unsignedInteger('courses_id');

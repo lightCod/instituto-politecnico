@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     public function courses() {
-        return $this->belongsTo('App\Course');
+        return $this->belongsTo('App\Course', 'courses_id');
     }
 
     public function debits() {
@@ -17,4 +17,9 @@ class Student extends Model
     public function credits() {
         return $this->hasMany('App\Credit');
     }
+
+    public function checking_accounts() {
+        return $this->hasMany('App\CheckingAccount');
+    }
+
 }
