@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Student;
 use App\Course;
 use Illuminate\Http\Request;
+use PDF;
 
 class StudentController extends Controller
 {
@@ -13,31 +14,30 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
-    {
-        $students = Student::where('courses_id', $id)->paginate(20);
-        $courses = Course::all();
-        $course = $courses->find($id);
+    public function index(Request $request)
+    { 
+        $students = Student::where(['courses_id' => $request['id']])->orderBy('created_at', 'desc')->get();
+        $course = Course::find($request['id']);
 
-        return view('students.liststudent')->with(['students' => $students, 'msg' => '', 'course' => $course]);
+        return view('students.liststudent')->with(['students' => $students, 'course_id' => $request['id'], 'course' => $course, 'msg' => '']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        return view('students.storestudent')->with('msg', 'create');
+        return view('students.storestudent')->with(['course_id' => $request['id'], 'msg' => 'create']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function search(Request $request){
+        $students = Student::where('courses_id', $request['id'])->orderBy('created_at', 'desc')->get();
+        $foundStudents = array();
+        foreach ($students as $student){
+            if(strpos($student->name, $request['search']) !== false){
+                $foundStudents[] = $student;
+            }
+        }
+        return view('students.liststudent')->with(['students' => $foundStudents, 'course_id' => $request['id'], 'msg' => '']);
+    }
+
     public function store(Request $request)
     {
         try{
@@ -45,16 +45,29 @@ class StudentController extends Controller
             $student->name = $request['name'];
             $student->level = $request['level'];
             $student->contacto = $request['contacto'];
+            $student->gender = $request['gender'];
             $student->scholarship = $request['scholarship'];
             $student->scholarship_type = $request['scholarship_type'];
-            $student->obs = $request['obs'];
+            $student->last_school = $request['last_school'];
+            $student->how_to_pay = $request['how_to_pay'];
+            $student->funding_source = $request['funding_source'];
+            $student->name_of_carer = $request['name_of_carer'];
+            $student->contact_of_carer = $request['contact_of_carer'];
+            $student->doc = $request['doc'];
+            $student->doc_number = $request['doc_number'];
+            $student->provenance = $request['provenance'];
+            $student->address = $request['address'];
+            $student->finish_year = $request['finish_year'];
+            $student->date_birth = substr($request['date_birth'],6,4)."-".substr($request['date_birth'],3,2)."-".substr($request['date_birth'],0,2);
+            $student->need_care = $request['need_care'];
+            $student->courses_id = $request['id'];
 
             $student->save();
 
-            return view('students.storestudent')->with('msg', 'success');
+            return view('students.storestudent')->with(['course_id' => $request['id'], 'msg' => 'success']);
         }
-        catch(Exception $e){
-            return view('students.storestudent')->with('msg', 'error');
+        catch(\Exception $e){
+            return view('students.storestudent')->with(['course_id' => $request['id'],'msg' => 'error']);
         }
     }
 
@@ -75,10 +88,10 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $student = Student::find($id);
-
+        $student = Student::find($request['id']);
+        $student->date_birth = substr($student->date_birth,8,2).'-'.substr($student->date_birth,5,2).'-'.substr($student->date_birth,0,4);
         return view('students.editstudent')->with(['student' => $student, 'msg' => '']);
     }
 
@@ -89,22 +102,34 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try{
-            $student = Student::find($id);
+            $student = Student::find($request['id']);
             $student->name = $request['name'];
             $student->level = $request['level'];
             $student->contacto = $request['contacto'];
+            $student->gender = $request['gender'];
             $student->scholarship = $request['scholarship'];
             $student->scholarship_type = $request['scholarship_type'];
-            $student->obs = $request['obs'];
-
+            $student->last_school = $request['last_school'];
+            $student->how_to_pay = $request['how_to_pay'];
+            $student->funding_source = $request['funding_source'];
+            $student->name_of_carer = $request['name_of_carer'];
+            $student->contact_of_carer = $request['contact_of_carer'];
+            $student->doc = $request['doc'];
+            $student->doc_number = $request['doc_number'];
+            $student->provenance = $request['provenance'];
+            $student->address = $request['address'];
+            $student->finish_year = $request['finish_year'];
+            $student->date_birth = substr($request['date_birth'],6,4)."-".substr($request['date_birth'],3,2)."-".substr($request['date_birth'],0,2);
+            $student->need_care = $request['need_care'];
+            $student->active = $request['active'];
             $student->save();
 
             return view('students.editstudent')->with(['student' => $student, 'msg' => 'success']);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return view('students.editstudent')->with(['student' => $student, 'msg' => 'error']);
         }
     }
@@ -115,17 +140,29 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         try{
-            $student = Student::find($id);
+            $student = Student::find($request['id']);
+            $course_id = $student->courses_id;
+            $course = Course::find($course_id);
             $student->delete();
-            $students = Student::paginate(20);
-            return view('students.liststudent')->with(['students' => $students, 'msg' => 'success']);
+            
+            $students = Student::where(['courses_id' => $course_id])->orderBy('created_at', 'desc')->get();
+
+            return view('students.liststudent')->with(['students' => $students, 'course_id' => $course_id, 'course' => $course, 'msg' => 'success']);
         }     
-        catch(Exception $e){
-            $students = Student::paginate(20);
-            return view('students.liststudent')->with(['students' => $students, 'msg' => 'error']);
+        catch(\Exception $e){
+
+            return view('students.liststudent')->with(['students' => $students, 'course_id' => $course_id, 'course' => $course, 'msg' => 'error']);
         }  
     }
+
+    public function pdf(Request $request){
+        $students = Student::where(['courses_id' => $request['id']])->orderBy('created_at', 'desc')->get();
+        $course = Course::find($request['id']);
+        $pdf = PDF::loadView('reports.studentsPdf', ['students' => $students, 'course' => $course])->setPaper('a2', 'landscape');
+        $filename = 'Cursos';
+        return $pdf->stream($filename. '.pdf');
     }
+}
