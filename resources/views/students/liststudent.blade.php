@@ -20,10 +20,10 @@
           <table class="table card-table table-striped table-vcenter">
             <thead>
               <tr>
-                <th colspan="10">
+                <th colspan="11">
                     <a href="{{ route('createstudent') }}?id={{$course_id}}" class="btn btn-secondary"><i class="fa fa-plus"></i> Novo Estudante</a>
                 </th>
-                <th colspan="9">
+                <th colspan="10">
                 <div class="col-lg-6 ml-auto">
                 <form class="input-icon my-3 my-lg-0" method="post" action="{{ route('search.students') }}">
                     {!! csrf_field() !!}
@@ -44,6 +44,7 @@
                   </th>
               </tr>
               <tr>
+                <th>Numero</th>
                 <th>Nome</th>
                 <th>Nivel</th>
                 <th>Contacto</th>
@@ -73,6 +74,7 @@
             <tbody>
                 @foreach ($students as $student)
                   <tr>
+                      <td>{{$student->num_student}}</td>
                       <td>{{$student->name}}</td>
                       <td>{{$student->level}}</td>
                       <td>{{$student->contacto}}</td>
@@ -110,6 +112,7 @@
                           <div class="dropdown-menu dropdown-menu-right">
                           <a href="{{ route('createdebit') }}?id={{$student->id}}" class="dropdown-item"><i class="dropdown-icon fe fe-tag"></i> Emitir nota de debito </a>
                           <a href="{{ route('createcredit') }}?id={{$student->id}}" class="dropdown-item"><i class="dropdown-icon fa fa-money"></i> Emitir nota de credito </a>
+                          <a href="{{ route('open.changeCourse') }}?student_id={{$student->id}}&course_id={{$course->id}}" class="dropdown-item"><i class="dropdown-icon fe fe-grid"></i> Mudar de curso </a>
                           <a href="{{ route('report.studentaccount') }}?id={{$student->id}}" class="dropdown-item"><i class="dropdown-icon fe fe-grid"></i> Extrato </a>
                           </div>
                         </div>

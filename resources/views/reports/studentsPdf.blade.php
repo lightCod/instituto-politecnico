@@ -18612,6 +18612,7 @@ svg {
           <table class="table card-table table-striped table-vcenter">
             <thead>
               <tr>
+                <th>Numero</th>
                 <th>Nome</th>
                 <th>Nivel</th>
                 <th>Contacto</th>
@@ -18636,6 +18637,7 @@ svg {
             <tbody>
                 @foreach ($students as $student)
                   <tr>
+                      <td>{{$student->num_student}}</td>
                       <td>{{$student->name}}</td>
                       <td>{{$student->level}}</td>
                       <td>{{$student->contacto}}</td>

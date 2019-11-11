@@ -69,6 +69,7 @@
                             <div class="dropdown-menu dropdown-menu-right">
                               <a href="{{ url('students') }}?id={{$course->id}}" class="dropdown-item"><i class="dropdown-icon fa fa-list-alt"></i>Lista de Estudantes</a>
                               <a href="{{ url('report.examlist') }}?id={{$course->id}}" class="dropdown-item"><i class="dropdown-icon fa fa-list"></i> Emitir lista de avaliacoes </a>
+                              <a href="{{ url('open.automaticDebit') }}?course_id={{$course->id}}" class="dropdown-item"><i class="dropdown-icon fa fa-list"></i> Debitar estudantes </a>
                             </div>  
                           </div>  
                         </td>
