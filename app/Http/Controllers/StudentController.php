@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use App\Course;
+use App\Debit;
+use App\DebitType;
+use App\CheckingAccount;
+use App\Credit;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -164,5 +168,85 @@ class StudentController extends Controller
         $pdf = PDF::loadView('reports.studentsPdf', ['students' => $students, 'course' => $course])->setPaper('a2', 'landscape');
         $filename = 'Cursos';
         return $pdf->stream($filename. '.pdf');
+    }
+
+    public function changeCourse(Request $request){
+        try{
+            $courses = Course::all();
+            $student = Student::find($request['student_id']);
+            $student->courses_id = $request['course_id'];
+            $student->save();
+            $course = Course::find($student->courses_id);
+            return view('students.changeCourse')->with(['student' => $student, 'courses' => $courses, 'course' => $course, 'msg' => 'success']);
+        }
+        catch(\Exception $e){
+            return view('students.changeCourse')->with(['student' => $student, 'courses' => $courses,  'course' => $course, 'msg' => 'error']);
+        }    
+    }
+    
+    public function openChangeCourse(Request $request){
+        $course = Course::find($request['course_id']);
+        $student = Student::find($request['student_id']);
+        $courses = Course::all();
+        return view('students.changeCourse')->with(['student' => $student, 'courses' => $courses, 'course' => $course, 'msg' => '']);
+    }
+
+    public function automaticDebit(Request $request){
+        try{
+            $debitTypes = DebitType::all();
+            $course = Course::find($request['course_id']);
+            $students = Student::where(['courses_id' => $request['course_id']])->get();
+            $amount = $request['refering_mounth'];
+            $debit_types_id = $request['debit_type_id'];
+            $i = 0;
+            foreach($students as $student){
+                $debit = new Debit();
+                $debit->debit_date = substr($request['debit_date'],6,4)."-".substr($request['debit_date'],3,2)."-".substr($request['debit_date'],0,2);
+                $debit->refering_mounth = $request['refering_mounth'];
+                $debit->students_id = $student->id;
+                $debit->debit_types_id = $debit_types_id;
+                $debit->save();
+
+                $debitName = $debit->debitsType->debit_name;
+                $debitAmount = $debit->debitsType->amount;
+                $debitDate = $debit->debit_date;
+                $idDebit = $debit->id;
+
+                $checkingAccount = new CheckingAccount();
+                $checkingAccount->account_date = $debitDate;
+                $checkingAccount->credit = 0;
+                $checkingAccount->debit = $debitAmount;
+                $checkingAccount->regarding = $debitName;
+                $checkingAccount->addcash = 0;
+                $credits = Credit::where('students_id', $debit->students_id)->get();
+                $creditTotal = 0;
+                foreach ($credits as $credit) {
+                    $creditTotal += $credit->amount;
+                }
+                $debitTotal = 0;
+                $debits = Debit::where('students_id', $debit->students_id)->get();
+                foreach ($debits as $debit) {
+                    $debitTotal += $debit->debitsType->amount;
+                }   
+                $total = $creditTotal - $debitTotal;
+                $checkingAccount->total = $total;
+                $student = Student::find($debit->students_id);
+                $checkingAccount->courses_id = $student->courses->id;
+                $checkingAccount->provenance_id = $idDebit;
+                $checkingAccount->students_id = $debit->students_id;
+
+                $checkingAccount->save();
+            }
+            return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'success']);
+        }
+        catch(Exception $e){
+            return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'error']);
+        }    
+    }
+
+    public function openAutomaticDebits(Request $request){
+        $debitTypes = DebitType::all();
+        $course = Course::find($request['course_id']);
+        return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => '']);
     }
 }

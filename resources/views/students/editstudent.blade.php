@@ -20,6 +20,13 @@
       <div class="row">
         <div class="form-group col-sm-6 col-md-6">
           <div class="form-group">
+            <label class="form-label">Numero de estudante </label>
+          <input type="text" class="form-control" name="name" value="{{$student->num_student}}" placeholder="">
+          </div>
+    </div>
+      <div class="row">
+        <div class="form-group col-sm-6 col-md-6">
+          <div class="form-group">
             <label class="form-label">Nome </label>
           <input type="text" class="form-control" name="name" value="{{$student->name}}" placeholder="">
           </div>
@@ -158,6 +165,7 @@
                 <option value="Passaporte">Passaporte</option>
                 <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
                 <option value="Cedula">Cedula</option>
+                <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
                 <option value="DIRE">DIRE</option>
                 <option value="BI">BI</option>
             </select>

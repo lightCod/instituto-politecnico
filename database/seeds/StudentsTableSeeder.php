@@ -20,6 +20,7 @@ class StudentsTableSeeder extends Seeder
             }            
             DB::table('students')->insert([
             'name' => $faker->name,
+            'num_student' => $i,
             'level' => $faker->randomElement($array = array ('10','12')),
             'contacto' => $faker->e164PhoneNumber,
             'gender' => $faker->randomElement($array = array ('F','M')),

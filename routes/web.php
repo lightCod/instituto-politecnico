@@ -32,6 +32,10 @@ Route::post('storestudent', 'StudentController@store')->name('storestudent')->mi
 Route::post('student.destroy', 'StudentController@destroy')->name('student.destroy')->middleware('auth');
 Route::get('student.statement/{id}', 'StudentController@show')->name('student.statement')->middleware('auth');
 Route::post('search.students', 'StudentController@search')->name('search.students')->middleware('auth');
+Route::get('open.changeCourse', 'StudentController@openChangeCourse')->name('open.changeCourse')->middleware('auth');
+Route::get('open.automaticDebit', 'StudentController@openAutomaticDebits')->name('open.automaticDebit')->middleware('auth');
+Route::post('student.changeCourse', 'StudentController@changeCourse')->name('student.changeCourse')->middleware('auth');
+Route::post('student.automaticDebit', 'StudentController@automaticDebit')->name('student.automaticDebit')->middleware('auth');
 
 Route::get('users', 'UserController@index')->name('users')->middleware('auth');
 Route::get('user.edit', 'UserController@edit')->name('user.edit')->middleware('auth');
