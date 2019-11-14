@@ -3,8 +3,8 @@
 @section('content')
 <form action="{{ route('debit.update') }}" method="post" class="card">
   {!! csrf_field() !!}
-    <!--<input type="hidden" name="debit_id" value="{{$debit->id}}"/>
-    <input type="hidden" name="account_id" value="{{$account->id}}"/>-->
+    <input type="hidden" name="debit_id" value="{{$debit->id}}"/>
+    <input type="hidden" name="account_id" value="{{$account->id}}"/>
     <div class="card-header">
       <h3 class="card-title">Atualisacao do debito</h3>
     </div>

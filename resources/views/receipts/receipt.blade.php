@@ -87,7 +87,6 @@
 			margin: 24px 0;
 			overflow: hidden;
 		}
-		
 		#container {
 			background-color: #dcdcdc;
 		}
@@ -96,7 +95,6 @@
     <body>
     <div class="container">
 	<div class="row">
-		
         <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
             <div class="row">
     			<div class="receipt-header">
@@ -115,15 +113,12 @@
 					</div>
 				</div>
             </div>
-			
 			<div class="row">
 				<div class="receipt-header receipt-header-mid">
 					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
 						<div class="receipt-right">
 							<h5>{{$student->name}} <small>  |   Numero : {{$credit->nr}}</small></h5>
 							<p><b>Celular :</b> {{$student->contacto}}</p>
-							<!--<p><b>Email :</b> info@gmail.com</p>
-							<p><b>Address :</b> Australia</p>-->
 						</div>
 					</div>
 					<div class="col-xs-4 col-sm-4 col-md-4">
@@ -133,7 +128,6 @@
 					</div>
 				</div>
             </div>
-			
             <div>
                 <table class="table table-bordered">
                     <thead>
@@ -145,7 +139,7 @@
                     <tbody>
                         <tr>
                             <td class="col-md-9">{{$credit->regarding}}</td>
-                            <td class="col-md-3"><i class="fa fa-inr"></i> {{$credit->amount}}mt </td>
+                            <td class="col-md-3 amount"><i class="fa fa-inr"></i> {{$credit->amount}}mt </td>
                         </tr>
                         <tr>
                             <td class="text-right">
@@ -153,21 +147,19 @@
                                 <strong>Valor Total: </strong>
                             </p>
 							</td>
-                            <td>
+                            <td class="amount">
                             <p>
                                 <strong><i class="fa fa-inr"></i> {{$credit->amount}}mt </strong>
                             </p>
 							</td>
                         </tr>
-                        <tr>
-                           
+                        <tr>      
                             <td class="text-right"><h2><strong>Total: </strong></h2></td>
-                            <td class="text-left text-danger"><h2><strong><i class="fa fa-inr"></i> {{$credit->amount}}MT </strong></h2></td>
+                            <td class="text-left text-danger amount"><h2><strong><i class="fa fa-inr"></i> {{$credit->amount}}MT </strong></h2></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-			
 			<div class="row">
 				<div class="receipt-header receipt-header-mid receipt-footer">
 					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
@@ -183,7 +175,6 @@
 					</div>
 				</div>
             </div>
-			
         </div>    
 	</div>
 </div>

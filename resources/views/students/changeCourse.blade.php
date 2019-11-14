@@ -29,8 +29,10 @@
             <label class="form-label">Curso</label>
             <select class="form-control custom-select" name="course_id">
                 <option value="{{$course->id}}" selected="selected">{{$course->courseName}}</option>
-                @foreach ($courses as $course)
-                    <option value="{{$course->id}}">{{$course->courseName}}</option>
+                @foreach ($courses as $cours)
+                  @if($course->courseName != $cours->courseName)
+                    <option value="{{$cours->id}}">{{$cours->courseName}}</option>
+                  @endif  
                 @endforeach
             </select>
         </div>
