@@ -161,7 +161,7 @@ class DebitController extends Controller
 
             return view('debit.editdebit')->with(['msg' => 'success', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
-        catch(\Exception $e){
+        catch(Exception $e){
             return view('debit.editdebit')->with(['msg' => 'error', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
     }

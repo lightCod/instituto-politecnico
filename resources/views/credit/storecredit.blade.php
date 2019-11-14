@@ -19,13 +19,11 @@
                   <div class="modal-header d-flex justify-content-center">
                     <p class="heading">Recibo do Cliente</p>
                   </div>
-
                   <!--Body-->
                   <div class="modal-body">
                     <i class="fa fa-file-text fa-4x animated rotateIn mb-4"></i>
                     <p>Cria e imprima o recido do estudante</p>
                   </div>
-
                   <!--Footer-->
                   <div class="modal-footer flex-center">
                     <a href="{{ url('generate.receipt') }}?credit_id={{$account->provenance_id}}" class="btn btn-info">Imprimir Recibo</a>

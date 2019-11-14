@@ -239,7 +239,7 @@ class StudentController extends Controller
             }
             return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'success']);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'error']);
         }    
     }

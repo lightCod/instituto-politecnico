@@ -18534,71 +18534,54 @@ svg {
 .fe-video:before {
   content: "\e9f5";
 }
-
 .fe-video-off:before {
   content: "\e9f6";
 }
-
 .fe-voicemail:before {
   content: "\e9f7";
 }
-
 .fe-volume:before {
   content: "\e9f8";
 }
-
 .fe-volume-1:before {
   content: "\e9f9";
 }
-
 .fe-volume-2:before {
   content: "\e9fa";
 }
-
 .fe-volume-x:before {
   content: "\e9fb";
 }
-
 .fe-watch:before {
   content: "\e9fc";
 }
-
 .fe-wifi:before {
   content: "\e9fd";
 }
-
 .fe-wifi-off:before {
   content: "\e9fe";
 }
-
 .fe-wind:before {
   content: "\e9ff";
 }
-
 .fe-x:before {
   content: "\ea00";
 }
-
 .fe-x-circle:before {
   content: "\ea01";
 }
-
 .fe-x-square:before {
   content: "\ea02";
 }
-
 .fe-zap:before {
   content: "\ea03";
 }
-
 .fe-zap-off:before {
   content: "\ea04";
 }
-
 .fe-zoom-in:before {
   content: "\ea05";
 }
-
 .fe-zoom-out:before {
   content: "\ea06";
 }
@@ -18627,9 +18610,9 @@ svg {
                         <tr>
                             <td>{{ $account->account_date }}</td>
                             <td>{{ $account->regarding }}</td>
-                            <td>{{ $account->credit }}</td>
-                            <td>{{ $account->debit }}</td>
-                            <td>{{ $account->total }}</td>
+                            <td class="amount">{{ $account->credit }}</td>
+                            <td class="amount">{{ $account->debit }}</td>
+                            <td class="amount">{{ $account->total }}</td>
                             <td> MTN </td>
                             <td class="w-1">
                         </tr> 
@@ -18637,6 +18620,5 @@ svg {
                 </tbody>
                 </table>
             </div>
-        
     </body>
 </html>        

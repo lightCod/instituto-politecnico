@@ -162,12 +162,49 @@
             <label class="form-label">Documento </label>
             <select class="form-control custom-select" name="doc">
                 <option value="BI" selected="{{$student->doc}}">{{$student->doc}}</option>
-                <option value="Passaporte">Passaporte</option>
-                <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
-                <option value="Cedula">Cedula</option>
-                <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
-                <option value="DIRE">DIRE</option>
-                <option value="BI">BI</option>
+                @switch($student->doc)
+                  @case("Passaporte")
+                    <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
+                    <option value="Cedula">Cedula</option>
+                    <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
+                    <option value="DIRE">DIRE</option>
+                    <option value="BI">BI</option>
+                  @break
+                  @case("Carta de Conducao")
+                    <option value="Passaporte">Passaporte</option>
+                    <option value="Cedula">Cedula</option>
+                    <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
+                    <option value="DIRE">DIRE</option>
+                    <option value="BI">BI</option>
+                  @break
+                  @case("Cedula")
+                    <option value="BI" selected="selected">BI</option>
+                    <option value="Passaporte">Passaporte</option>
+                    <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
+                    <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
+                    <option value="DIRE">DIRE</option>
+                  @break  
+                @case("Cartao de eleitor")
+                    <option value="BI" selected="selected">BI</option>
+                    <option value="Passaporte">Passaporte</option>
+                    <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
+                    <option value="Cedula">Cedula</option>
+                    <option value="DIRE">DIRE</option>   
+                @break  
+                @case("DIRE")
+                    <option value="BI" selected="selected">BI</option>
+                    <option value="Passaporte">Passaporte</option>
+                    <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
+                    <option value="Cedula">Cedula</option>
+                    <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option> 
+                @break
+                @case("BI")
+                    <option value="Passaporte">Passaporte</option>
+                    <option value="Carta de Conducao">Carta de Condu&ccedil;&atilde;o</option>
+                    <option value="Cedula">Cedula</option>
+                    <option value="Cartao de eleitor">Cart&atilde;o de eleitor</option>
+                    <option value="DIRE">DIRE</option>       
+                @endswitch
             </select>
           </div>
     </div>

@@ -18626,9 +18626,9 @@ svg {
                     <tr>
                         <td>{{$account->students->name}}</td>
                         <td>{{$account->account_date}}</td>
-                        <td>{{$account->credit}}</td>
-                        <td>{{$account->debit}}</td>
-                        <td>{{$totais}}</td>
+                        <td class="amount">{{$account->credit}}</td>
+                        <td class="amount">{{$account->debit}}</td>
+                        <td class="amount">{{$totais}}</td>
                     </tr> 
                   @endforeach     
               </tbody>
