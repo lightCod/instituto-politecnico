@@ -46,6 +46,7 @@ class StudentController extends Controller
     {
         try{
             $student = new Student();
+            $student->num_student = $request['num_student'];
             $student->name = $request['name'];
             $student->level = $request['level'];
             $student->contacto = $request['contacto'];
@@ -110,6 +111,7 @@ class StudentController extends Controller
     {
         try{
             $student = Student::find($request['id']);
+            $student->num_student = $request['num_student'];
             $student->name = $request['name'];
             $student->level = $request['level'];
             $student->contacto = $request['contacto'];
