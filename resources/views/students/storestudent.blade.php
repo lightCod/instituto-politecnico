@@ -21,7 +21,7 @@
         <div class="form-group col-sm-6 col-md-6">
           <div class="form-group">
             <label class="form-label">Numero de estudante </label>
-            <input type="text" class="form-control" name="num_student" placeholder="Estudante..." required>
+            <input type="text" class="form-control" name="num_student" placeholder="Num Estudant..." required>
           </div>
         </div>
         <div class="form-group col-sm-6 col-md-6">
