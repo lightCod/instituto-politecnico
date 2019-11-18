@@ -44,6 +44,7 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $validationData = $request->validate(['num_student' => 'required|unique:students|max:12', 'name' => 'required|unique:students|max:255']);
         try{
             $student = new Student();
             $student->num_student = $request['num_student'];
@@ -205,6 +206,9 @@ class StudentController extends Controller
                 $debit = new Debit();
                 $debit->debit_date = substr($request['debit_date'],6,4)."-".substr($request['debit_date'],3,2)."-".substr($request['debit_date'],0,2);
                 $debit->refering_mounth = $request['refering_mounth'];
+                $debit->year = $request['year'];
+                $dType = DebitType::find($request['debit_type_id']);
+                $debit->desc_payment = $dType->debit_name;
                 $debit->students_id = $student->id;
                 $debit->debit_types_id = $debit_types_id;
                 $debit->save();
@@ -218,7 +222,9 @@ class StudentController extends Controller
                 $checkingAccount->account_date = $debitDate;
                 $checkingAccount->credit = 0;
                 $checkingAccount->debit = $debitAmount;
-                $checkingAccount->regarding = $debitName;
+                $checkingAccount->regarding = $dType->debit_name;
+                $checkingAccount->month = $request['refering_mounth'];
+                $checkingAccount->year = $request['year'];
                 $checkingAccount->addcash = 0;
                 $credits = Credit::where('students_id', $debit->students_id)->get();
                 $creditTotal = 0;
@@ -238,10 +244,16 @@ class StudentController extends Controller
                 $checkingAccount->students_id = $debit->students_id;
 
                 $checkingAccount->save();
+
+                if($total < 0){
+                    $stud = Student::find($debit->students_id);
+                    $stud->regular = false;
+                    $stud->save();
+                }
             }
             return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'success']);
         }
-        catch(\Exception $e){
+        catch(Exception $e){
             return view('students.debitStudents')->with(['course' => $course, 'debitTypes' => $debitTypes, 'msg' => 'error']);
         }    
     }

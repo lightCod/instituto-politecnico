@@ -18599,6 +18599,8 @@ svg {
                     <tr>
                     <th>Data</th>
                     <th>Referente</th>
+                    <th>Mes</th>
+                    <th>Ano</th>
                     <th>Credito</th>
                     <th>Debito</th>
                     <th>Saldo</th>
@@ -18610,6 +18612,8 @@ svg {
                         <tr>
                             <td>{{ $account->account_date }}</td>
                             <td>{{ $account->regarding }}</td>
+                            <td>{{ $account->month }}</td>
+                            <td>{{ $account->year }}</td>
                             <td class="amount">{{ $account->credit }}</td>
                             <td class="amount">{{ $account->debit }}</td>
                             <td class="amount">{{ $account->total }}</td>

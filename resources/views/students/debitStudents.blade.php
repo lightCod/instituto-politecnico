@@ -15,9 +15,13 @@
         @elseif ($msg == 'error')
           <div class="alert alert-danger" role="alert">
               Houve um erro ao tentar registrar os debitos aos estudantes!
+          </div>
+        @eleseif ($msg == 'nost')  
+        <div class="alert alert-danger" role="alert">
+              A turma esta vazia n&atilde;o existe nenhum estudante cadastrado!
           </div>      
       @endif
-    <div class="row">
+      <div class="row">
         <div class="form-group col-sm-6 col-md-6">
             <div class="form-group">
                 <label class="form-label">Date</label>
@@ -44,6 +48,12 @@
             </div>
         </div>
         <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+          <label class="form-label">Ano</label>
+          <input type="text" class="form-control" name="year" data-mask="0000" data-mask-clearifnotmatch="true" placeholder="0000" required>
+        </div>
+      </div>
+        <div class="col-sm-6 col-md-6">
           <div class="form-group">
               <label class="form-label">Tipo de Debito</label>
               <select class="form-control custom-select" name="debit_type_id">
@@ -53,8 +63,6 @@
               </select>
           </div>
       </div>
-
-</div>
 <script>
   require(['input-mask']);
 </script>

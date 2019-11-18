@@ -46,6 +46,9 @@ class DebitController extends Controller
             $debit = new Debit();
             $debit->debit_date = substr($request['debit_date'],6,4)."-".substr($request['debit_date'],3,2)."-".substr($request['debit_date'],0,2);
             $debit->refering_mounth = $request['refering_mounth'];
+            $debit->year = $request['year'];
+            $dType = DebitType::find($request['debit_type_id']);
+            $debit->desc_payment = $dType->debit_name;
             $debit->students_id = $student_id;
             $debit->debit_types_id = $request['debit_type_id'];
 
@@ -60,7 +63,9 @@ class DebitController extends Controller
             $checkingAccount->account_date = $debitDate;
             $checkingAccount->credit = 0;
             $checkingAccount->debit = $debitAmount;
-            $checkingAccount->regarding = $debitName;
+            $checkingAccount->regarding = $dType->debit_name;
+            $checkingAccount->month = $request['refering_mounth'];
+            $checkingAccount->year = $request['year'];
             $checkingAccount->addcash = 0;
             $credits = Credit::where('students_id', $student_id)->get();
             $creditTotal = 0;
@@ -80,6 +85,13 @@ class DebitController extends Controller
             $checkingAccount->students_id = $student_id;
 
             $checkingAccount->save();
+
+            if($total < 0){
+                $stud = Student::find($request['students_id']);
+                $stud->regular = false;
+                $stud->save();
+            }
+
             return view('debit.storedebit')->with(['debitTypes' => $debitTypes, 'student_id' => $student_id, 'msg' => 'success']);
         }
         catch(\Exception $e){
@@ -125,11 +137,14 @@ class DebitController extends Controller
      */
     public function update(Request $request)
     {
-
+        $validationData = $request->validate(['year' => 'required|min:4']);
         try{
             $debit = Debit::find($request['debit_id']);
             $debit->debit_date = substr($request['debit_date'],6,4)."-".substr($request['debit_date'],3,2)."-".substr($request['debit_date'],0,2);
             $debit->refering_mounth = $request['refering_mounth'];
+            $debit->year = $request['year'];
+            $dType = DebitType::find($request['debit_type_id']);
+            $debit->desc_payment = $dType->debit_name;
             $debit->debit_types_id = $request['debit_type_id'];
             $debit->save();
 
@@ -142,7 +157,9 @@ class DebitController extends Controller
             $account->account_date = $debitDate;
             $account->credit = 0;
             $account->debit = $debitAmount;
-            $account->regarding = $debitName;
+            $checkingAccount->regarding = $dType->debit_name;
+            $checkingAccount->month = $request['refering_mounth'];
+            $checkingAccount->year = $request['year'];
             $credits = Credit::where('students_id', $student_id)->get();
             $debitTypes = DebitType::all();
             $creditTotal = 0;
@@ -157,11 +174,18 @@ class DebitController extends Controller
             $total = $creditTotal - $debitTotal;
             $account->total = $total;
             $account->save();
+
+            if($total < 0){
+                $stud = Student::find($request['students_id']);
+                $stud->regular = false;
+                $stud->save();
+            }
+
             $debit->debit_date = substr($debit->debit_date,8,2).'/'.substr($debit->debit_date,5,2).'/'.substr($debit->debit_date,0,4);
 
             return view('debit.editdebit')->with(['msg' => 'success', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return view('debit.editdebit')->with(['msg' => 'error', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
     }
@@ -180,6 +204,35 @@ class DebitController extends Controller
             $debit->delete();
             $account->delete();
 
+            $credits = Credit::where('students_id', $request['student_id'])->get();
+            $creditTotal = 0;
+            foreach ($credits as $credit) {
+                $creditTotal += $credit->amount;
+            }
+            $debitTotal = 0;
+            $debits = Debit::where('students_id', $request['student_id'])->get();
+            foreach ($debits as $debit) {
+                $debitTotal += $debit->debitsType->amount;
+            }   
+            $total = $creditTotal - $debitTotal;
+            $accoun = CheckingAccount::where('students_id', '=', $request['student_id'])->orderBy('created_at', 'desc')->first();
+            if($accoun == null){
+                if($total >= 0){
+                    $stud = Student::find($request['student_id']);
+                    $stud->regular = true;
+                    $stud->save();
+                } 
+            }
+            else {
+                $accoun->total = $total;
+                $accoun->save();
+                if($total >= 0){
+                    $stud = Student::find($request['student_id']);
+                    $stud->regular = true;
+                    $stud->save();
+                }
+            }
+            
             $accounts = CheckingAccount::where('students_id', $request['student_id'])->get();
             $student = Student::find($request['student_id']);
 

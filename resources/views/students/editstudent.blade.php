@@ -3,6 +3,15 @@
 @section('content')
 <form action="{{ route('student.update' ) }}" method="post" class="card">
   {!! csrf_field() !!}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <input type="hidden" name="id" value="{{$student->id}}">
     <div class="card-header">
       <h3 class="card-title">Atualisar dados do estudante</h3>
@@ -23,8 +32,7 @@
             <label class="form-label">Numero de estudante </label>
           <input type="text" class="form-control" name="num_student" value="{{$student->num_student}}" placeholder="">
           </div>
-    </div>
-      <div class="row">
+        </div>
         <div class="form-group col-sm-6 col-md-6">
           <div class="form-group">
             <label class="form-label">Nome </label>
@@ -40,8 +48,7 @@
                   <option value="10">10</option>
                 @else
                 <option value="12">12</option>
-                @endif
-                
+                @endif 
             </select>
         </div>
       </div>
@@ -121,12 +128,10 @@
                     <option value="12.5%">12.5%</option>
                     <option value="15%">15%</option>
                     <option value="25%">25%</option>
-              @endswitch
-                
+              @endswitch   
             </select>
         </div>  
       </div>
-      <div class="row">
         <div class="form-group col-sm-6 col-md-6">
           <div class="form-group">
             <label class="form-label">Escola onde frequentou o nivel Medio/Basico </label>
@@ -208,7 +213,6 @@
             </select>
           </div>
     </div>
-    </div>
         <div class="form-group col-sm-6 col-md-6">
           <div class="form-group">
             <label class="form-label">Numero do Doc </label>
@@ -252,7 +256,7 @@
               <option value="{{$student->active}}" selected="selected">@if ($student->active == 1) Sim
                   @else N&atilde;o
               @endif
-              @if ($student->active == 0)
+              @if ($student->active == 1)
                 <option value="0">N&atilde;o</option>
               @else
                 <option value="1">Sim</option>

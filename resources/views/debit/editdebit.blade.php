@@ -3,6 +3,15 @@
 @section('content')
 <form action="{{ route('debit.update') }}" method="post" class="card">
   {!! csrf_field() !!}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
     <input type="hidden" name="debit_id" value="{{$debit->id}}"/>
     <input type="hidden" name="account_id" value="{{$account->id}}"/>
     <div class="card-header">
@@ -17,8 +26,7 @@
           <div class="alert alert-danger" role="alert">
               Houve um erro ao tentar atualisar o debito!
           </div>
-        @else
-            
+        @else   
       @endif
     <div class="row">
         <div class="form-group col-sm-6 col-md-6">
@@ -47,6 +55,12 @@
                 </select>
             </div>
         </div> 
+        <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+          <label class="form-label">Ano</label>
+          <input type="text" class="form-control" name="year" value="{{$debit->year}}" data-mask="0000" data-mask-clearifnotmatch="true" placeholder="0000" required>
+        </div>
+      </div>
         <div class="col-sm-6 col-md-6">
           <div class="form-group">
               <label class="form-label">Tipo de Debito</label>

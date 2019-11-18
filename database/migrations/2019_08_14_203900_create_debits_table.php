@@ -18,6 +18,8 @@ class CreateDebitsTable extends Migration
             //$table->integr('nr');
             $table->date('debit_date');
             $table->string('refering_mounth');
+            $table->integer('year');
+            $table->string('desc_payment')->nullable()->default(NULL);
             $table->timestamps();
 
             $table->unsignedInteger('students_id');

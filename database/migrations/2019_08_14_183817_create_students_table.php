@@ -28,12 +28,13 @@ class CreateStudentsTable extends Migration
             $table->string('name_of_carer', 255);
             $table->string('contact_of_carer', 30);
             $table->string('doc', 50);
-            $table->string('doc_number', 30)->unique();
+            $table->string('doc_number', 30);
             $table->string('provenance', 150);
             $table->string('address', 255);
             $table->string('finish_year', 4);
             $table->date('date_birth');
             $table->string('need_care', 255);
+            $table->boolean('regular')->default(1);
             $table->boolean('active')->default(1);
             $table->timestamps();
 
