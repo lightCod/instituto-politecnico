@@ -81,7 +81,8 @@ class CheckingAccountController extends Controller
     {
         $from = substr($request['initial_date'],6,4)."-".substr($request['initial_date'],3,2)."-".substr($request['initial_date'],0,2);
         $to = substr($request['final_date'],6,4)."-".substr($request['final_date'],3,2)."-".substr($request['final_date'],0,2);
-        $accounts = CheckingAccount::whereBetween('created_at', [$from, $to])->get();
+        //$accounts = DB::table('checking_accounts')->whereBetween('created_at', [$from, $to])->get();
+        $accounts = CheckingAccount::where('created_at', '>=', $to)->get();
         $totais = 0;
         foreach ($accounts as $account) {
             $totais += $account->credit;

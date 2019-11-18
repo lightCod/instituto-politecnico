@@ -3,13 +3,13 @@
 @section('content')
     <div class="page-header">
         <h1 class="page-title">
-            Relatorio POr Data
+            Relatorio Por Data
         </h1>
       </div>  
         <div class="table-responsive">
             <table class="table card-table table-striped table-vcenter">
               <thead>
-              <tr>*
+              <tr>
                   <th colspan="5">
                       <a href="{{ url('report.bydatePdf') }}?initial_date={{$initial_date}}?final_date={{$final_date}}" class="btn btn-secondary float-right"><i class="fa fa-file-pdf-o"></i> Exportar</a>
                   </th>
