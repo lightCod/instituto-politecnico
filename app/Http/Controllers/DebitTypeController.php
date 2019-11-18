@@ -106,11 +106,10 @@ class DebitTypeController extends Controller
      */
     public function destroy(Request $request)
     {
-        try{
-            
+        try{ 
+            $debittypes = DebitType::all();
             $debittype = DebitType::find($request['id']);
             $debittype->delete();
-            $debittypes = DebitType::all();
             return view('debittype.listdebittype')->with(['debittypes' => $debittypes, 'msg' => 'success']);
         }
         catch(\Exception $e){
