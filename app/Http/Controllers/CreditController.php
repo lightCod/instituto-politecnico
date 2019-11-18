@@ -40,8 +40,9 @@ class CreditController extends Controller
      */
     public function store(Request $request)
     {
+        $validationData = $request->validate(['year' => 'required|min:4']);
         try{
-            $lastCredit = Credit::orderBy('created_at', 'desc')->first();
+            $lastCredit = Credit::where('students_id', '=', $request['student_id'])->orderBy('created_at', 'desc')->first();
             $existCreditRecord = 1;
             try{
                 $lastEntryDate = $lastCredit->created_at; 
@@ -73,6 +74,8 @@ class CreditController extends Controller
             $credit->amount = str_replace (',', '.', str_replace ('.', '', $request['amount']));
             $credit->credit_date = substr($request['credit_date'],6,4)."-".substr($request['credit_date'],3,2)."-".substr($request['credit_date'],0,2);
             $credit->regarding = $request['regarding'];
+            $credit->month = $request['month'];
+            $credit->year = $request['year'];
             $credit->students_id = $request['student_id'];
             $credit->save();
 
@@ -85,6 +88,8 @@ class CreditController extends Controller
             $account->credit = $creditAmount;
             $account->debit = 0;
             $account->regarding = $request['regarding'];
+            $account->month = $request['month'];
+            $account->year = $request['year'];
             $account->addcash = 1;
             $credits = Credit::where('students_id', $student_id)->get();
             $creditTotal = 0;
@@ -101,8 +106,14 @@ class CreditController extends Controller
             $student = Student::find($student_id);
             $account->courses_id = $student->courses_id;
             $account->provenance_id = $idCredit;
-            $account->students_id = $request['student_id'];
+            $account->students_id = $student_id;
             $account->save();
+
+            if($total >= 0){
+                $stud = Student::find($student_id);
+                $stud->regular = true;
+                $stud->save();
+            }
 
             return view('credit.storecredit')->with(['student' => $student, 'account' => $account, 'msg' => 'success']);
         }
@@ -146,12 +157,15 @@ class CreditController extends Controller
      */
     public function update(Request $request)
     {
+        $validationData = $request->validate(['year' => 'required|min:4']);
         try{
             $credit = Credit::find($request['credit_id']);
             $credit->regarding = $request['regarding'];
             $credit->amount = str_replace (',', '.', str_replace ('.', '', $request['amount']));
             $credit->credit_date = substr($request['credit_date'],6,4)."-".substr($request['credit_date'],3,2)."-".substr($request['credit_date'],0,2);
             $credit->regarding = $request['regarding'];
+            $credit->month = $request['month'];
+            $credit->year = $request['year'];
             $credit->save();
             $cred = $credit;
 
@@ -163,6 +177,8 @@ class CreditController extends Controller
             $creditAmount = str_replace (',', '.', str_replace ('.', '', $request['amount']));
             $account->credit = $creditAmount;
             $account->regarding = $request['regarding'];
+            $account->month = $request['month'];
+            $account->year = $request['year'];
             $credits = Credit::where('students_id', $student_id)->get();
             $creditTotal = 0;
             foreach ($credits as $credit) {
@@ -178,9 +194,15 @@ class CreditController extends Controller
             $account->save();
             $cred->credit_date = substr($cred->credit_date,8,2).'/'.substr($cred->credit_date,5,2).'/'.substr($cred->credit_date,0,4);
 
+            if($total >= 0){
+                $stud = Student::find($student_id);
+                $stud->regular = true;
+                $stud->save();
+            }
+
             return view('credit.editcredit')->with(['msg' => 'success', 'credit' => $cred, 'account' => $account]);
         }
-        catch(Exception $e) {
+        catch(\Exception $e) {
             return view('credit.editcredit')->with(['credit' => $credit, 'account' => $account, 'msg' => 'error']);
         }   
     }
@@ -197,9 +219,40 @@ class CreditController extends Controller
         try {
             $account = CheckingAccount::find($request['id']);
             $credit = Credit::find($account->provenance_id);
-            $credit->save();
+            $credit->delete();
             $account->delete();
 
+            $credits = Credit::where('students_id', $request['student_id'])->get();
+            $creditTotal = 0;
+            foreach (
+                $credits as $credit) {
+                $creditTotal += $credit->amount;
+            }
+
+            $debitTotal = 0;
+            $debits = Debit::where('students_id', $request['student_id'])->get();
+            foreach ($debits as $debit) {
+                $debitTotal += $debit->debitsType->amount;
+            }   
+            $total = $creditTotal - $debitTotal;
+            $accoun = CheckingAccount::where('students_id', '=', $request['student_id'])->orderBy('created_at', 'desc')->first();
+            if($accoun == null){
+                if($total < 0){
+                    $stud = Student::find($request['student_id']);
+                    $stud->regular = false;
+                    $stud->save();
+                }
+            }
+            else{
+                $accoun->total = $total;
+                $accoun->save();
+                if($total < 0){
+                    $stud = Student::find($request['student_id']);
+                    $stud->regular = false;
+                    $stud->save();
+                }
+            }
+            
             $accounts = CheckingAccount::where('students_id', $request['student_id'])->get();
             $student = Student::find($request['student_id']);
 

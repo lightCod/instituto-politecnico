@@ -19,18 +19,19 @@
             <table class="table card-table table-striped table-vcenter">
               <thead>
               <tr>
-                  <th colspan="9">
+                  <th colspan="11">
                     <a href="{{ url('studentaccount.report') }}?student_id={{ $student->id }}" class="btn btn-secondary float-right"><i class="fa fa-file-pdf-o"></i> Exportar</a>
                   </th>
                 </tr>
                 <tr>
                   <th>Data</th>
                   <th>Referente</th>
+                  <th>Mes</th>
+                  <th>Ano</th>
                   <th>Credito</th>
                   <th>Debito</th>
                   <th>Saldo</th>
                   <th>Moeda</th>
-                  <th></th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -40,6 +41,8 @@
                     <tr>
                         <td>{{ $account->account_date }}</td>
                         <td>{{ $account->regarding }}</td>
+                        <td>{{ $account->month }}</td>
+                        <td>{{ $account->year }}</td>
                         <td class="amount">{{ $account->credit }}</td>
                         <td class="amount">{{ $account->debit }}</td>
                         <td class="amount">{{ $account->total }}</td>

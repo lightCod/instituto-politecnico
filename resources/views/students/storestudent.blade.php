@@ -2,7 +2,16 @@
 
 @section('content')
 <form action="{{'storestudent'}}" method="post" class="card">
-  {!! csrf_field() !!}
+{!! csrf_field() !!}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
   <input type="hidden" name="id" value="{{$course_id}}">
     <div class="card-header">
       <h3 class="card-title">Registro novo estudante</h3>

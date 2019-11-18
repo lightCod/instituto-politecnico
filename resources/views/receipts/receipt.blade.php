@@ -118,6 +118,7 @@
 					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
 						<div class="receipt-right">
 							<h5>{{$student->name}} <small>  |   Numero : {{$credit->nr}}</small></h5>
+							<p><b>Curso :</b> {{$course->courseName}}</p>
 							<p><b>Celular :</b> {{$student->contacto}}</p>
 						</div>
 					</div>
@@ -138,7 +139,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="col-md-9">{{$credit->regarding}}</td>
+                            <td class="col-md-9">{{$credit->regarding}} {{$credit->month}} {{$credit->year}}</td>
                             <td class="col-md-3 amount"><i class="fa fa-inr"></i> {{$credit->amount}}mt </td>
                         </tr>
                         <tr>

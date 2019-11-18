@@ -73,7 +73,7 @@ class CheckingAccountController extends Controller
 
     public function accountSitauation(Request $request)
     {
-        $students = DB::table('students')->join('checking_accounts', 'students.id', '=', 'checking_accounts.students_id')->where('active', '=', '1')->where('total', '>=', '0')->where('checking_accounts.courses_id','=', $request['id'])->distinct()->get('name');
+        $students = DB::table('students')->where('students.active', '=', '1')->where('students.courses_id', '=', $request['id'])->where('students.regular', '=', '1')->distinct()->get('students.name');
         return view('reports.evaluationList')->with('students', $students);
     }
 

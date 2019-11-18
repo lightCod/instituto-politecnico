@@ -36,6 +36,7 @@ class CourseController extends Controller
     }
     public function store(Request $request)
     {
+        $validationData = $request->validate(['year' => 'required|min:4']);
         try{
             $course = new Course();
             $course->courseName = $request['coursename'];
@@ -87,6 +88,7 @@ class CourseController extends Controller
      */
     public function update(Request $request)
     {
+        $validationData = $request->validate(['year' => 'required|min:4']);
         try {
             $course = Course::find($request['id']);
             $course->duraction = $request['duration'];
@@ -113,12 +115,13 @@ class CourseController extends Controller
     { 
         try{
             $course = Course::find($request['id']);
+            $course_type = $course->course_type;
             $course->delete();
-            $courses = Course::paginate(10);
+            $courses = Course::where('course_type', '=', $course_type)->get();
             return view('courses.listcourses')->with(['courses' => $courses, 'course_type' => $course->course_type, 'msg' => 'success']);
         }     
         catch(\Exception $e){
-            $courses = Course::paginate(10);
+            $courses = Course::where('course_type', '=', $course_type)->get();
             return view('courses.listcourses')->with(['courses' => $courses, 'course_type' => $course->course_type, 'msg' => 'error']);
         }  
     }

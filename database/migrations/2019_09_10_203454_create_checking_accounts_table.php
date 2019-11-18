@@ -20,6 +20,8 @@ class CreateCheckingAccountsTable extends Migration
             $table->decimal('debit', 10, 2);
             $table->boolean('addcash');
             $table->string('regarding');
+            $table->string('month');
+            $table->integer('year');
             $table->decimal('total', 10, 2);
             $table->integer('courses_id');
             $table->integer('provenance_id')->nullable()->default(NULL);

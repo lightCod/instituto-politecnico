@@ -19,6 +19,8 @@ class CreateCreditsTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->date('credit_date');
             $table->string('regarding');
+            $table->string('month');
+            $table->integer('year');
             $table->timestamps();
 
             $table->unsignedInteger('students_id');

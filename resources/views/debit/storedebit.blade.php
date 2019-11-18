@@ -3,6 +3,15 @@
 @section('content')
 <form action="{{'storedebit'}}" method="post" class="card">
   {!! csrf_field() !!}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
     <input type="hidden" name="student_id" value="{{$student_id}}" />
     <div class="card-header">
       <h3 class="card-title">Registro do debito</h3>
@@ -43,6 +52,12 @@
                 </select>
             </div>
         </div>
+        <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+          <label class="form-label">Ano</label>
+          <input type="text" class="form-control" name="year" data-mask="0000" data-mask-clearifnotmatch="true" placeholder="0000" required>
+        </div>
+      </div>
         <div class="col-sm-6 col-md-6">
           <div class="form-group">
               <label class="form-label">Tipo de Debito</label>

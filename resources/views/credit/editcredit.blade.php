@@ -3,6 +3,15 @@
 @section('content')
 <form action="{{'credit.update'}}" method="post" class="card">
   {!! csrf_field() !!}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
     <input type="hidden" name="credit_id" value="{{$credit->id}}" />
     <input type="hidden" name="account_id" value="{{$account->id}}" />
     <div class="card-header">
@@ -56,6 +65,31 @@
                 <input type="text" name="regarding" value="{{$credit->regarding}}" class="form-control"  placeholder="Pagamento referente" required>
             </div>
         </div>
+        <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+                <label class="form-label">Referente</label>
+                <select class="form-control custom-select" name="month">
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Marco">Marco</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+          <label class="form-label">Ano</label>
+          <input type="text" class="form-control" name="year" value="{{$credit->year}}" data-mask="0000" data-mask-clearifnotmatch="true" placeholder="0000" required>
+        </div>
+      </div>
         <div class="form-group col-sm-6 col-md-6">
             <div class="form-group">
                 <label class="form-label">Date</label>
