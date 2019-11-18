@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-header">
         <h1 class="page-title">
-            Relatorio POr Data
+            Relatorio Por Data
         </h1>
       </div>  
         <div class="table-responsive">
