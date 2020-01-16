@@ -87,14 +87,14 @@ class DebitController extends Controller
             $checkingAccount->save();
 
             if($total < 0){
-                $stud = Student::find($request['students_id']);
+                $stud = Student::find($student_id);
                 $stud->regular = false;
                 $stud->save();
             }
 
             return view('debit.storedebit')->with(['debitTypes' => $debitTypes, 'student_id' => $student_id, 'msg' => 'success']);
         }
-        catch(\Exception $e){
+        catch(Exception $e){
             return view('debit.storedebit')->with(['debitTypes' => $debitTypes, 'student_id' => $student_id, 'msg' => 'error']);
         }
     }
