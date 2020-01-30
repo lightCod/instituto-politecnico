@@ -33,13 +33,14 @@ class StudentController extends Controller
 
     public function search(Request $request){
         $students = Student::where('courses_id', $request['id'])->orderBy('created_at', 'desc')->get();
+        $course = Course::find($request['id']);
         $foundStudents = array();
         foreach ($students as $student){
             if(strpos($student->name, $request['search']) !== false){
                 $foundStudents[] = $student;
             }
         }
-        return view('students.liststudent')->with(['students' => $foundStudents, 'course_id' => $request['id'], 'msg' => '']);
+        return view('students.liststudent')->with(['students' => $foundStudents, 'course_id' => $request['id'], 'course' => $course, 'msg' => '']);
     }
 
     public function store(Request $request)
