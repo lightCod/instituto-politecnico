@@ -40,7 +40,8 @@
                 <label class="form-label">Referente</label>
                 <select class="form-control custom-select" name="refering_mounth">
                     <option value="{{$debit->refering_mounth}}" selected="selected">{{$debit->refering_mounth}}</option>
-                    <option value="Janeiro">Janeiro</option>
+                    @switch($debit->refering_mounth)
+                  @case("Janeiro")
                     <option value="Fevereiro">Fevereiro</option>
                     <option value="Marco">Marco</option>
                     <option value="Abril">Abril</option>
@@ -52,6 +53,150 @@
                     <option value="Outubro">Outubro</option>
                     <option value="Novembro">Novembro</option>
                     <option value="Dezembro">Dezembro</option>
+                      @break
+                  @case("Fevereiro")
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Marco">Marco</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                      @break
+                  @case("Marco")
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                        @break
+                  @case("Abril")
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Marco">Marco</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                        @break 
+                  @case("Maio")
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Marco">Marco</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                        @break 
+                  @case("Junho")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Julho">Julho</option>
+                      <option value="Agosto">Agosto</option>
+                      <option value="Setembro">Setembro</option>
+                      <option value="Outubro">Outubro</option>
+                      <option value="Novembro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break
+                  @case("Julho")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Junho">Julho</option>
+                      <option value="Agosto">Agosto</option>
+                      <option value="Setembro">Setembro</option>
+                      <option value="Outubro">Outubro</option>
+                      <option value="Novembro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break
+                  @case("Agosto")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Junho">Julho</option>
+                      <option value="Julho">Agosto</option>
+                      <option value="Setembro">Setembro</option>
+                      <option value="Outubro">Outubro</option>
+                      <option value="Novembro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break
+                    @case("Setembro")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Junho">Julho</option>
+                      <option value="Julho">Agosto</option>
+                      <option value="Agosto">Setembro</option>
+                      <option value="Outubro">Outubro</option>
+                      <option value="Novembro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break  
+                    @case("Outubro")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Junho">Julho</option>
+                      <option value="Julho">Agosto</option>
+                      <option value="Agosto">Setembro</option>
+                      <option value="Setembro">Outubro</option>
+                      <option value="Novembro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break 
+                      @case("Novembro")
+                      <option value="Janeiro">Janeiro</option>
+                      <option value="Fevereiro">Fevereiro</option>
+                      <option value="Marco">Marco</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Maio">Maio</option>
+                      <option value="Junho">Julho</option>
+                      <option value="Julho">Agosto</option>
+                      <option value="Agosto">Setembro</option>
+                      <option value="Setembro">Outubro</option>
+                      <option value="Outubro">Novembro</option>
+                      <option value="Dezembro">Dezembro</option>
+                        @break                                            
+                  @default
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Marco">Marco</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+              @endswitch   
                 </select>
             </div>
         </div> 

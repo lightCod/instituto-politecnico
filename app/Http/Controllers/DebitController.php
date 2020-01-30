@@ -157,9 +157,9 @@ class DebitController extends Controller
             $account->account_date = $debitDate;
             $account->credit = 0;
             $account->debit = $debitAmount;
-            $checkingAccount->regarding = $dType->debit_name;
-            $checkingAccount->month = $request['refering_mounth'];
-            $checkingAccount->year = $request['year'];
+            $account->regarding = $dType->debit_name;
+            $account->month = $request['refering_mounth'];
+            $account->year = $request['year'];
             $credits = Credit::where('students_id', $student_id)->get();
             $debitTypes = DebitType::all();
             $creditTotal = 0;
@@ -176,7 +176,7 @@ class DebitController extends Controller
             $account->save();
 
             if($total < 0){
-                $stud = Student::find($request['students_id']);
+                $stud = Student::find($student_id);
                 $stud->regular = false;
                 $stud->save();
             }
@@ -185,7 +185,7 @@ class DebitController extends Controller
 
             return view('debit.editdebit')->with(['msg' => 'success', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
-        catch(\Exception $e){
+        catch(Exception $e){
             return view('debit.editdebit')->with(['msg' => 'error', 'debit' => $debit, 'debitTypes' => $debitTypes, 'account' => $account, 'debitTyp' => DebitType::find($debit->debit_types_id)]);
         }
     }
